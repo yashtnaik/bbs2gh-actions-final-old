@@ -294,34 +294,12 @@ jobs:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          # set -euo pipefail
-          # export GH_CONFIG_DIR="$RUNNER_TEMP/gh-dr"
-          # chmod +x "$GITHUB_WORKSPACE"/scripts/*.sh || true
-
-          # "$GITHUB_WORKSPACE"/scripts/1_migration.sh \
-          #   --csv "$GITHUB_WORKSPACE/repos.csv" \
-          #   --max-concurrent "${{ inputs.max_concurrent }}" \
-          #   --target-api-url "${TARGET_API_URL}"
-          
           set -euo pipefail
-          export GH_CONFIG_DIR="${RUNNER_TEMP}/gh-dr"
-          
-          # Validate-required-variables
-          
-          : "${GITHUB_WORKSPACE:?GITHUB_WORKSPACE is not set}"
-          : "${RUNNER_TEMP:?RUNNER_TEMP is not set}"
-          : "${TARGET_API_URL:?TARGET_API_URL is not set}"
-        
-          # Remove CRLF if file was edited on Windows
-          sed -i 's/\r$//' "${GITHUB_WORKSPACE}/scripts/1_migration.sh"
-        
-          # Show first few lines for troubleshooting
-          head -5 "${GITHUB_WORKSPACE}/scripts/1_migration.sh"
-        
-          chmod +x "${GITHUB_WORKSPACE}"/scripts/*.sh || true
-        
-          "${GITHUB_WORKSPACE}/scripts/1_migration.sh" \
-            --csv "${GITHUB_WORKSPACE}/repos.csv" \
+          export GH_CONFIG_DIR="$RUNNER_TEMP/gh-dr"
+          chmod +x "$GITHUB_WORKSPACE"/scripts/*.sh || true
+
+          "$GITHUB_WORKSPACE"/scripts/1_migration.sh \
+            --csv "$GITHUB_WORKSPACE/repos.csv" \
             --max-concurrent "${{ inputs.max_concurrent }}" \
             --target-api-url "${TARGET_API_URL}"
 
